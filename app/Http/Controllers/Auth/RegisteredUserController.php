@@ -46,6 +46,7 @@ class RegisteredUserController extends Controller
             $birth_day = date('Y-m-d', strtotime($data));
             $subjects = $request->subject;
 
+
             $user_get = User::create([
                 'over_name' => $request->over_name,
                 'under_name' => $request->under_name,
@@ -57,6 +58,9 @@ class RegisteredUserController extends Controller
                 'role' => $request->role,
                 'password' => bcrypt($request->password)
             ]);
+
+
+
             if($request->role == 4){
                 $user = User::findOrFail($user_get->id);
                 $user->subjects()->attach($subjects);
@@ -64,7 +68,10 @@ class RegisteredUserController extends Controller
             DB::commit();
             return view('auth.login.login');
         }catch(\Exception $e){
+
             DB::rollback();
+
+
             return redirect()->route('loginView');
         }
     }

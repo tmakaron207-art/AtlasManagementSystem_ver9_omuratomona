@@ -50,6 +50,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+// ☆ログインタイムアウトでログイン画面へ戻る設定↓
+    if ($exception instanceof \Illuminate\Auth\AuthenticationException) {
+        return redirect()->route('loginView');
+    }
+
         return parent::render($request, $exception);
     }
 }
