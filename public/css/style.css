@@ -16,6 +16,14 @@ li {
   list-style: none;
 }
 
+/* ☆エラーメッセージ追加↓ */
+.error-message {
+  color: red;
+  white-space: nowrap;
+  font-size: 12px;
+  margin-bottom: 2px;
+}
+
 /* サイドバー */
 .sidebar {
   width: 150px;

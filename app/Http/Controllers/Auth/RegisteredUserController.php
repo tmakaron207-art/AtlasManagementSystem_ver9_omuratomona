@@ -14,6 +14,9 @@ use DB;
 use App\Models\Users\Subjects;
 use App\Models\Users\User;
 
+// ☆追加↓
+use App\Http\Requests\UserRequest;
+
 class RegisteredUserController extends Controller
 {
     /**
@@ -35,7 +38,8 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+// ☆Reaquest $repuestをUserRequest $requestへ変更↓
+    public function store(UserRequest $request)
     {
         DB::beginTransaction();
         try{
