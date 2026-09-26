@@ -72,9 +72,9 @@
         </div>
         <div class="mt-3">
 <!-- ☆バリデーションエラーメッセージ追加↓ -->
-              <!-- @error('birth_day')
+              @error('birth_day')
                 <p class="error-message">{{ $message }}</p>
-              @enderror -->
+              @enderror
           <label class="d-block m-0 aa" style="font-size:13px">生年月日</label>
           <select class="old_year" name="old_year">
             <option value="none">-----</option>

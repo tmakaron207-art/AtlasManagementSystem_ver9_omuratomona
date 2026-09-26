@@ -41,6 +41,12 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('setting/{user_id}/admin', [CalendarsController::class, 'reserveSettings'])->name('calendar.admin.setting');
                 Route::post('setting/update/admin', [CalendarsController::class, 'updateSettings'])->name('calendar.admin.update');
             });
+// ☆講師のみ閲覧できる設定↓
+            Route::middleware(['auth','teacher'])->group(function(){
+                Route::get('calendar/{user_id}/admin', [CalendarsController::class, 'show'])->name('calendar.admin.show');
+                Route::get('setting/{user_id}/admin', [CalendarsController::class, 'reserveSettings'])->name('calendar.admin.setting');
+
+            });
         });
         Route::namespace('BulletinBoard')->group(function(){
             Route::get('bulletin_board/posts/{keyword?}', [PostsController::class, 'show'])->name('post.show');
