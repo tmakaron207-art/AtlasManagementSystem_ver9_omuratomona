@@ -47,11 +47,12 @@ class UserRequest extends FormRequest
 
 
         'old_year'=>['required',],
-        'old_monthr'=>['required',],
+        'old_month'=>['required',],
         'old_day'=>['required',],
+
         'birth_day'
         =>['required',
-        'date_format:Y-n-j',
+        'date_format:Y-m-d',
         'after_or_equal:2000-01-01',
         'before_or_equal:today',],
 
@@ -100,6 +101,7 @@ class UserRequest extends FormRequest
             'birth_day' => $this->old_year.'-'.
             $this->old_month.'-'.
             $this->old_day,
+
         ]);
     }
 }
