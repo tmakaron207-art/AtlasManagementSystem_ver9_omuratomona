@@ -16,6 +16,16 @@ class UserRequest extends FormRequest
         return true;
     }
 
+    // ☆リクエストデータ（生年月日）を加工、前処理用メソッド
+    public function prepareForValidation(){
+        $this -> merge([
+            'birth_day' => $this->old_year.'-'.
+            $this->old_month.'-'.
+            $this->old_day,
+
+        ]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -31,11 +41,11 @@ class UserRequest extends FormRequest
         'over_name_kana'=>'required|string|regex:/^[ァ-ヶー]+$/u|max:30',
         'under_name_kana'=>'required|string|regex:/^[ァ-ヶー]+$/u|max:30',
 
-        // 'mail_address'
-        // =>['required',
-        // 'email',
-        // 'unique:users,mail_address',
-        // 'max:100',],
+        'mail_address'
+        =>['required',
+        'email',
+        'unique:users,mail_address',
+        'max:100',],
 
         'sex'
         =>['required',
@@ -56,11 +66,11 @@ class UserRequest extends FormRequest
         'after_or_equal:2000-01-01',
         'before_or_equal:today',],
 
-        'passwaord'
+        'password'
         =>['required',
         'string',
         'min:8',
-        'max30',
+        'max:30',
         'confirmed'],
         ];
     }
@@ -79,29 +89,21 @@ class UserRequest extends FormRequest
         'under_name_kana.required' => '※名のフリガナが未入力です',
         'under_name_kana.max' => '※30文字以下で入力して下さい',
         'under_name_kana.regex' => '※カタカナのみで入力して下さい',
-        // 'mail_address.required' => '※メールアドレスが未入力です',
-        // 'mail_address.unique' => '※既に登録済みのアドレスです',
-        // 'mail_address.max' => '※100文字以下で入力して下さい',
-        // 'mail_address.email' => '※メール形式で入力して下さい',
+        'mail_address.required' => '※メールアドレスが未入力です',
+        'mail_address.unique' => '※既に登録済みのアドレスです',
+        'mail_address.max' => '※100文字以下で入力して下さい',
+        'mail_address.email' => '※メール形式で入力して下さい',
         'sex.required' => '※性別が未選択です',
         'role.required' => '※権限が未選択です',
         'birth_day.required' => '※生年月日が未入力です',
         'birth_day.after_or_equal' => '※2000年1月1日からで入力して下さい',
-        'birth_day.before_or_eqial' => '※今日までで入力して下さい',
-        'passwaord.required' => '※パスワードが未入力です',
-        'passwaord.min' => '※8文字以上で入力して下さい',
-        'passwaord.max' => '※30文字以下で入力して下さい',
-        'passwaord.confirmed' => '※確認用と違います',
+        'birth_day.before_or_equal' => '※今日までで入力して下さい',
+        'password.required' => '※パスワードが未入力です',
+        'password.min' => '※8文字以上で入力して下さい',
+        'password.max' => '※30文字以下で入力して下さい',
+        'password.confirmed' => '※確認用と違います',
     ];
 }
 
-    // ☆リクエストデータ（生年月日）を加工、前処理用メソッド
-    public function prepareForValidation(){
-        $this -> merge([
-            'birth_day' => $this->old_year.'-'.
-            $this->old_month.'-'.
-            $this->old_day,
 
-        ]);
-    }
 }

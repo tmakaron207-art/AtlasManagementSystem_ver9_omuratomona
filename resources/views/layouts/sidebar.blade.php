@@ -25,7 +25,7 @@
                 <p><a href="{{ route('calendar.general.show',['user_id' => Auth::id()]) }}">スクール予約</a></p>
 
 <!-- ☆講師アカウントのみ表示↓ -->
-            @if(auth()->user()->role==[1,2,3])
+            @if(in_array(auth()->user()->role, [1, 2, 3]))
                 <p><a href="{{ route('calendar.admin.show',['user_id' => Auth::id()]) }}">スクール予約確認</a></p>
                 <p><a href="{{ route('calendar.admin.setting',['user_id' => Auth::id()]) }}">スクール枠登録</a></p>
             @endif
