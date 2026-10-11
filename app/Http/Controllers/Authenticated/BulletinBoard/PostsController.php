@@ -21,7 +21,8 @@ class PostsController extends Controller
 {
     public function show(Request $request){
 // ☆コメント数表示のためにwithCountを追加↓
-        $posts = Post::with('user', 'postComments')->withCount('postComments')->get();
+// ☆さらにいいねの数取得のためにもう一つ追加↓
+        $posts = Post::with('user', 'postComments')->withCount('postComments')->withCount('likes')->get();
         $categories = MainCategory::get();
         $like = new Like;
         $post_comment = new Post;
