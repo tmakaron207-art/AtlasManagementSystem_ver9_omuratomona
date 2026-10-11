@@ -11,12 +11,17 @@ use App\Models\Posts\PostComment;
 use App\Models\Posts\Like;
 use App\Models\Users\User;
 use App\Http\Requests\BulletinBoard\PostFormRequest;
+
 use Auth;
+
+// ☆コメント用バリデーションのformrequestを適用のための宣言↓
+use App\Http\Requests\PostCommentFormRequest;
 
 class PostsController extends Controller
 {
     public function show(Request $request){
-        $posts = Post::with('user', 'postComments')->get();
+// ☆コメント数表示のためにwithCountを追加↓
+        $posts = Post::with('user', 'postComments')->withCount('postComments')->get();
         $categories = MainCategory::get();
         $like = new Like;
         $post_comment = new Post;
@@ -74,7 +79,8 @@ class PostsController extends Controller
         return redirect()->route('post.input');
     }
 
-    public function commentCreate(Request $request){
+// ☆投稿コメントの登録処理↓
+    public function commentCreate(PostCommentFormRequest $request){
         PostComment::create([
             'post_id' => $request->post_id,
             'user_id' => Auth::id(),

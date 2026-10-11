@@ -1,5 +1,6 @@
 <?php
 
+// ☆ユーザー登録用（名前メアドなど）バリデーション設定用FormRequest
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;

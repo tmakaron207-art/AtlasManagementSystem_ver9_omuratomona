@@ -1,4 +1,5 @@
 <?php
+// ☆投稿のコメント用モデル☆
 
 namespace App\Models\Posts;
 
@@ -17,6 +18,8 @@ class PostComment extends Model
         'comment',
     ];
 
+    // ☆PostCommentモデル（コメント）とPostモデル（投稿）のリレーション↓
+    // ☆1つのコメントは1つの投稿に紐づく＝belongsTo
     public function post(){
         return $this->belongsTo('App\Models\Posts\Post');
     }

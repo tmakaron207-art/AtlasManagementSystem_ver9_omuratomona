@@ -19,12 +19,15 @@ class Post extends Model
         return $this->belongsTo('App\Models\Users\User');
     }
 
+// ☆Postモデル（投稿）と PostCommentモデル（コメント）のリレーション↓
+// ☆1つの投稿に複数のコメントが紐づく＝hasMany
     public function postComments(){
         return $this->hasMany('App\Models\Posts\PostComment');
     }
 
     public function subCategories(){
-        // リレーションの定義
+//☆サブカテゴリーの検索で完全一致のためのリレーションの定義
+        return $this->belongsTo('App\Models\Categories\SubCategory');
     }
 
     // コメント数
