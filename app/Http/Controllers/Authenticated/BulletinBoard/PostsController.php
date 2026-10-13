@@ -16,6 +16,8 @@ use Auth;
 
 // ☆コメント用バリデーションのformrequestを適用のための宣言↓
 use App\Http\Requests\PostCommentFormRequest;
+// ☆登録用編集のバリデーションのFormRequestの適用のための宣言↓
+use App\Http\Requests\PostRequest;
 
 class PostsController extends Controller
 {
@@ -63,7 +65,8 @@ class PostsController extends Controller
         return redirect()->route('post.show');
     }
 
-    public function postEdit(Request $request){
+// ☆投稿編集の登録処理↓
+    public function postEdit(PostRequest $request){
         Post::where('id', $request->post_id)->update([
             'post_title' => $request->post_title,
             'post' => $request->post_body,

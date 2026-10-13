@@ -14,7 +14,7 @@ class PostRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,8 +24,23 @@ class PostRequest extends FormRequest
      */
     public function rules()
     {
+// ☆投稿編集用のバリデーション設定↓
         return [
+            'post_title'=>['required','string','max:100'],
+            'post_body'=>['required','string','max:2000'],
             //
         ];
     }
+
+    // ☆バリデーションエラーメッセージ日本語バージョン↓
+    public function messages()
+{
+    return [
+        'post_title.required'=>'タイトルを入力してください',
+        'post_title.max:100'=>'タイトルは100文字以下で入力してください',
+        'post_body.required'=>'本文を入力してください',
+        'post_body.max:2000'=>'本文は2000文字以下で入力してください',
+
+    ];
+}
 }

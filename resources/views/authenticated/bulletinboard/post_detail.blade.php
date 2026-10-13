@@ -7,9 +7,14 @@
           <div>
           </div>
           <div>
+<!-- ☆投稿の編集と削除ボタンを自分の投稿のみに表示させる設定↓ -->
+        @if(Auth::id() == $post->user_id)
             <span class="edit-modal-open" post_title="{{ $post->post_title }}" post_body="{{ $post->post }}" post_id="{{ $post->id }}">編集</span>
             <a href="{{ route('post.delete', ['id' => $post->id]) }}">削除</a>
+        @endif
           </div>
+
+
         </div>
 
         <div class="contributor d-flex">
@@ -61,9 +66,18 @@
   <div class="modal__content">
     <form action="{{ route('post.edit') }}" method="post">
       <div class="w-100">
+<!-- ☆投稿タイトルのバリデーションエラーメッセージ表示↓ -->
+        @error('post_title')
+        <div class="error-message">{{$message}}</div>
+        @enderror
         <div class="modal-inner-title w-50 m-auto">
           <input type="text" name="post_title" placeholder="タイトル" class="w-100">
         </div>
+
+<!-- ☆投稿本文のバリデーションエラーメッセージ表示↓ -->
+        @error('post_body')
+        <div class="error-message">{{$message}}</div>
+        @enderror
         <div class="modal-inner-body w-50 m-auto pt-3 pb-3">
           <textarea placeholder="投稿内容" name="post_body" class="w-100"></textarea>
         </div>

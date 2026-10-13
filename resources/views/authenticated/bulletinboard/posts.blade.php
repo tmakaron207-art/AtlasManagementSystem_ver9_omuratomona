@@ -13,6 +13,7 @@
             <i class="fa fa-comment"></i><span class="">{{ $post->post_comments_count }}</span>
           </div>
           <div>
+<!-- ☆いいねの数表示↓ -->
             @if(Auth::user()->is_Like($post->id))
             <p class="m-0"><i class="fas fa-heart un_like_btn" post_id="{{ $post->id }}"></i><span class="like_counts{{ $post->id }}">{{ $post->likes_count }}</span></p>
             @else
