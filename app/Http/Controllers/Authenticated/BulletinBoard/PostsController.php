@@ -24,7 +24,10 @@ class PostsController extends Controller
     public function show(Request $request){
 // ☆コメント数表示のためにwithCountを追加↓
 // ☆さらにいいねの数取得のためにもう一つ追加↓
-        $posts = Post::with('user', 'postComments')->withCount('postComments')->withCount('likes')->get();
+        $posts = Post::with('user', 'postComments')
+        ->withCount('postComments')
+        ->withCount('likes')
+        ->get();
         $categories = MainCategory::get();
         $like = new Like;
         $post_comment = new Post;
@@ -74,6 +77,7 @@ class PostsController extends Controller
         return redirect()->route('post.detail', ['id' => $request->post_id]);
     }
 
+// ☆投稿内容削除処理
     public function postDelete($id){
         Post::findOrFail($id)->delete();
         return redirect()->route('post.show');

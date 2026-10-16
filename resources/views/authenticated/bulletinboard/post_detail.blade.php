@@ -4,18 +4,26 @@
     <div class="m-3 detail_container">
       <div class="p-3">
         <div class="detail_inner_head">
-          <div>
-          </div>
-          <div>
-<!-- ☆投稿の編集と削除ボタンを自分の投稿のみに表示させる設定↓ -->
-        @if(Auth::id() == $post->user_id)
-            <span class="edit-modal-open" post_title="{{ $post->post_title }}" post_body="{{ $post->post }}" post_id="{{ $post->id }}">編集</span>
-            <a href="{{ route('post.delete', ['id' => $post->id]) }}">削除</a>
-        @endif
-          </div>
-
-
+<!-- ☆投稿タイトルのバリデーションエラーメッセージ表示↓ -->
+        @error('post_title')
+        <div class="error-message">{{$message}}</div>
+        @enderror
+<!-- ☆投稿本文のバリデーションエラーメッセージ表示↓ -->
+            @error('post_body')
+            <div class="error-message">{{$message}}</div>
+            @enderror
+        <div>
         </div>
+        <div>
+<!-- ☆投稿の編集と削除ボタンを自分の投稿のみに表示させる設定↓ -->
+            @if(Auth::id() == $post->user_id)
+                <span class="edit-modal-open" post_title="{{ $post->post_title }}" post_body="{{ $post->post }}" post_id="{{ $post->id }}">編集</span>
+    <!-- ☆削除のモーダル表示↓ -->
+                <a href="{{ route('post.delete', ['id' => $post->id])  }}" onclick="return confirm('削除してよろしいですか？')" >削除</a>
+            @endif
+        </div>
+        </div>
+
 
         <div class="contributor d-flex">
           <p>
@@ -47,10 +55,7 @@
   <div class="w-50 p-3">
       <div class="comment_container border m-5">
         <div class="comment_area p-3">
-<!-- ☆コメント用バリデーションエラーメッセージ表示↓ -->
-        @error('comment')
-            <div class="error-message">{{ $message }}</div>
-        @enderror
+
 
         <p class="m-0">コメントする</p>
         <textarea class="w-100" name="comment" form="commentRequest"></textarea>
@@ -66,18 +71,11 @@
   <div class="modal__content">
     <form action="{{ route('post.edit') }}" method="post">
       <div class="w-100">
-<!-- ☆投稿タイトルのバリデーションエラーメッセージ表示↓ -->
-        @error('post_title')
-        <div class="error-message">{{$message}}</div>
-        @enderror
         <div class="modal-inner-title w-50 m-auto">
           <input type="text" name="post_title" placeholder="タイトル" class="w-100">
         </div>
 
-<!-- ☆投稿本文のバリデーションエラーメッセージ表示↓ -->
-        @error('post_body')
-        <div class="error-message">{{$message}}</div>
-        @enderror
+
         <div class="modal-inner-body w-50 m-auto pt-3 pb-3">
           <textarea placeholder="投稿内容" name="post_body" class="w-100"></textarea>
         </div>
