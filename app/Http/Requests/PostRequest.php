@@ -40,7 +40,6 @@ class PostRequest extends FormRequest
         'post_title.max:100'=>'タイトルは100文字以下で入力してください',
         'post_body.required'=>'本文を入力してください',
         'post_body.max:2000'=>'本文は2000文字以下で入力してください',
-
     ];
 }
 }

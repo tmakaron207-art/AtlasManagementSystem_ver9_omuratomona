@@ -7,6 +7,7 @@
         @foreach($main_categories as $main_category)
         <optgroup label="{{ $main_category->main_category }}">
         <!-- サブカテゴリー表示 -->
+         {{ $main_category->main_category }}
         </optgroup>
         @endforeach
       </select>
@@ -38,8 +39,22 @@
         <input type="text" class="w-100" name="main_category_name" form="mainCategoryRequest">
         <input type="submit" value="追加" class="w-100 btn btn-primary p-0" form="mainCategoryRequest">
       </div>
-      <!-- サブカテゴリー追加 -->
+
+      <!-- ☆サブカテゴリー追加↓ -->
+    <div class="">
+<!-- ☆サブカテゴリーのバリデーションエラーメッセージ表示↓ -->
+        @error('sub_category_name')
+        <div class="error-message">{{$message}}</div>
+        @enderror
+        <p class="m-0">サブカテゴリー</p>
+        <input type="text" class="w-100" name="sub_category_name" form="subCategoryRequest">
+        <input type="submit" value="追加" class="w-100 btn btn-primary p-0" form="subCategoryRequest">
+      </div>
+
       <form action="{{ route('main.category.create') }}" method="post" id="mainCategoryRequest">{{ csrf_field() }}</form>
+
+      <!-- ☆サブカテゴリーのform追加↓ -->
+      <form action="{{ route('sub.category.create') }}" method="post" id="subCategoryRequest">{{ csrf_field() }}</form>
     </div>
   </div>
   @endcan

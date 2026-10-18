@@ -18,6 +18,9 @@ use Auth;
 use App\Http\Requests\PostCommentFormRequest;
 // ☆登録用編集のバリデーションのFormRequestの適用のための宣言↓
 use App\Http\Requests\PostRequest;
+// ☆サブカテゴリー登録のバリデーションのFormRequestの適用のための宣言↓
+use App\Http\Requests\SubCategoryRequest;
+
 
 class PostsController extends Controller
 {
@@ -135,4 +138,18 @@ class PostsController extends Controller
 
         return response()->json();
     }
+
+    // ☆サブカテゴリーの登録処理↓
+    public function subCategoryCreate(SubCategoryRequest $request)
+{
+    $sub_category = new SubCategory();
+
+    $sub_category->main_category_id = $request->main_category_id;
+    $sub_category->sub_category = $request->sub_category_name;
+
+    $sub_category->save();
+
+    return redirect()->route('post.input');
+
+}
 }
