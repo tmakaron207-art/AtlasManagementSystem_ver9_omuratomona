@@ -23,9 +23,22 @@ class SelectNames implements DisplayUsers{
       ->orWhere('over_name_kana', 'like', '%'.$keyword.'%')
       ->orWhere('under_name_kana', 'like', '%'.$keyword.'%');
     })->whereIn('sex', $gender)
-    ->whereIn('role', $role)
-    ->orderBy('over_name_kana', $updown)->get();
+    ->whereIn('role', $role);
+
+    // 選択科目による検索
+        if (!empty($subjects)) {
+            $users->whereHas('subjects', function ($q) use ($subjects) {
+                $q->whereIn('subjects.id', $subjects);
+            });
+            }
+
+// ☆追加↓（ $users = $usersだけ）
+         $users = $users
+        ->orderBy('over_name_kana', $updown)
+        ->get();
 
     return $users;
-  }
+
+
+    }
 }

@@ -7,12 +7,12 @@ class SelectIds implements DisplayUsers{
 
   // 改修課題：選択科目の検索機能
   public function resultUsers($keyword, $category, $updown, $gender, $role, $subjects){
-    if(is_null($gender)){
+    if(empty($gender)){
       $gender = ['1', '2', '3'];
     }else{
       $gender = array($gender);
     }
-    if(is_null($role)){
+    if(empty($role)){
       $role = ['1', '2', '3', '4'];
     }else{
       $role = array($role);

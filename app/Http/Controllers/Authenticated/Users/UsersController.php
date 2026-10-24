@@ -20,9 +20,15 @@ class UsersController extends Controller
         $updown = $request->updown;
         $gender = $request->sex;
         $role = $request->role;
-        $subjects = null;// ここで検索時の科目を受け取る
+// ① ☆検索フォームから選択された科目IDを受け取る↓
+        $selected_subjects = $request->input('subject_ids', []);
+
+         // ② 検索処理に科目IDを渡す
         $userFactory = new SearchResultFactories();
+
         $users = $userFactory->initializeUsers($keyword, $category, $updown, $gender, $role, $subjects);
+
+        // ③ 画面表示用の科目一覧を取得する
         $subjects = Subjects::all();
         return view('authenticated.users.search', compact('users', 'subjects'));
     }

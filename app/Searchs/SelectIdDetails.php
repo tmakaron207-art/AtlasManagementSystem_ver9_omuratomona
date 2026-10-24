@@ -12,12 +12,12 @@ class SelectIdDetails implements DisplayUsers{
     }else{
       $keyword = array($keyword);
     }
-    if(is_null($gender)){
+    if(empty($gender)){
       $gender = ['1', '2', '3'];
     }else{
       $gender = array($gender);
     }
-    if(is_null($role)){
+    if(empty($role)){
       $role = ['1', '2', '3', '4'];
     }else{
       $role = array($role);

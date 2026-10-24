@@ -27,6 +27,8 @@ class SubCategoryRequest extends FormRequest
              // サブカテゴリー登録
             'sub_category_name' => ['required','string','max:100','unique:sub_categories,sub_category',],
             //
+            // 登録のカテゴリー部分の登録↓
+            'main_category_id' => ['required','exists:main_categories,id',],
         ];
     }
 
@@ -37,6 +39,9 @@ class SubCategoryRequest extends FormRequest
         'sub_category_name.required'=>'サブカテゴリーを入力してください',
         'sub_category_name.max'=>'サブカテゴリーは100文字以内で入力してください',
         'sub_category_name.unique'=>'この名前のサブカテゴリーは既に登録されています',
+
+        'main_category_id.required'=>'サブカテゴリーを選択してください',
+        'main_category_id.exists'=>'登録されているメインカテゴリーを選択してください',
 
     ];
 }

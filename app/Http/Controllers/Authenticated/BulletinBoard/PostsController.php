@@ -20,6 +20,9 @@ use App\Http\Requests\PostCommentFormRequest;
 use App\Http\Requests\PostRequest;
 // ☆サブカテゴリー登録のバリデーションのFormRequestの適用のための宣言↓
 use App\Http\Requests\SubCategoryRequest;
+// ☆メインカテゴリー登録のバリデーションのFormRequestの適用のための宣言↓
+use App\Http\Requests\MainCategoryRequest;
+
 
 
 class PostsController extends Controller
@@ -57,8 +60,9 @@ class PostsController extends Controller
         return view('authenticated.bulletinboard.post_detail', compact('post'));
     }
 
+// ☆メインカテゴリーとサブカテゴリーを取得して、Bladeファイルに渡す
     public function postInput(){
-        $main_categories = MainCategory::get();
+        $main_categories = MainCategory::with('subCategories')->get();
         return view('authenticated.bulletinboard.post_create', compact('main_categories'));
     }
 
@@ -85,7 +89,9 @@ class PostsController extends Controller
         Post::findOrFail($id)->delete();
         return redirect()->route('post.show');
     }
-    public function mainCategoryCreate(Request $request){
+
+// ☆メインカテゴリーの登録処理
+    public function mainCategoryCreate(MainCategoryRequest $request){
         MainCategory::create(['main_category' => $request->main_category_name]);
         return redirect()->route('post.input');
     }
@@ -133,8 +139,8 @@ class PostsController extends Controller
         $like = new Like;
 
         $like->where('like_user_id', $user_id)
-             ->where('like_post_id', $post_id)
-             ->delete();
+            ->where('like_post_id', $post_id)
+            ->delete();
 
         return response()->json();
     }
@@ -152,4 +158,6 @@ class PostsController extends Controller
     return redirect()->route('post.input');
 
 }
+
+
 }

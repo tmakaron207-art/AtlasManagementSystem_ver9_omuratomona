@@ -88,7 +88,25 @@
             </select>
           </div>
           <div class="selected_engineer">
-            <label>選択科目</label>
+            <label>選択科目 </label>
+
+             @foreach($subjects as $subject)
+        <div>
+            <input
+                type="checkbox"
+                name="subject_ids[]"
+                value="{{ $subject->id }}"
+                id="subject_{{ $subject->id }}"
+                form="userSearchRequest"
+                {{ in_array($subject->id, $selected_subjects ?? []) ? 'checked' : '' }}
+            >
+
+            <label for="subject_{{ $subject->id }}">
+                {{ $subject->subject }}
+            </label>
+        </div>
+    @endforeach
+
           </div>
         </div>
       </div>
