@@ -21,7 +21,7 @@ class UsersController extends Controller
         $gender = $request->sex;
         $role = $request->role;
 // ① ☆検索フォームから選択された科目IDを受け取る↓
-        $selected_subjects = $request->input('subject_ids', []);
+        $subjects= $request->input('subject_ids', []);
 
          // ② 検索処理に科目IDを渡す
         $userFactory = new SearchResultFactories();
