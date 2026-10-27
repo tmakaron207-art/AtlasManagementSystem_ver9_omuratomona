@@ -34,16 +34,24 @@ class PostsController extends Controller
         ->withCount('postComments')
         ->withCount('likes')
         ->get();
-        $categories = MainCategory::get();
+        $categories = MainCategory::with('subCategories')->get();
         $like = new Like;
         $post_comment = new Post;
         if(!empty($request->keyword)){
             $posts = Post::with('user', 'postComments')
             ->where('post_title', 'like', '%'.$request->keyword.'%')
             ->orWhere('post', 'like', '%'.$request->keyword.'%')->get();
+
+// ☆クリックし投稿だけを表示する設定の投稿絞り込み処理↓
         }else if($request->category_word){
             $sub_category = $request->category_word;
-            $posts = Post::with('user', 'postComments')->get();
+            $posts = Post::with('user', 'postComments')
+            ->withCount('postComments')
+            ->withCount('likes')
+            ->whereHas('subCategories', function ($query) use ($sub_category) {
+            $query->where('sub_category', $sub_category);
+        })
+        ->get();
         }else if($request->like_posts){
             $likes = Auth::user()->likePostId()->get('like_post_id');
             $posts = Post::with('user', 'postComments')
@@ -66,12 +74,15 @@ class PostsController extends Controller
         return view('authenticated.bulletinboard.post_create', compact('main_categories'));
     }
 
+// ☆投稿保存する処理
     public function postCreate(PostFormRequest $request){
         $post = Post::create([
             'user_id' => Auth::id(),
             'post_title' => $request->post_title,
             'post' => $request->post_body
         ]);
+// ☆選択されたサブカテゴリーを中間テーブルに登録処理を追加↓
+        $post->subCategories()->attach($request->post_category_id);
         return redirect()->route('post.show');
     }
 

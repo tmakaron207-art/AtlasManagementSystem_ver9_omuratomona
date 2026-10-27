@@ -26,8 +26,13 @@ class Post extends Model
     }
 
     public function subCategories(){
-//☆サブカテゴリーの検索で完全一致のためのリレーションの定義
-        return $this->belongsTo('App\Models\Categories\SubCategory');
+//☆サブカテゴリーの検索で完全一致のためのリレーションの定義 (投稿とサブカテゴリーの多対多)
+        return $this->belongsToMany(
+        \App\Models\Categories\SubCategory::class,
+        'post_sub_categories',
+        'post_id',
+        'sub_category_id'
+    );
     }
 
     // コメント数
