@@ -1,4 +1,7 @@
 <?php
+
+// ☆名前で検索するときに、選択科目の条件も追加してユーザーを絞り込むクラス
+
 namespace App\Searchs;
 
 use App\Models\Users\User;

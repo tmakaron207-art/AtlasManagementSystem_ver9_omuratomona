@@ -50,6 +50,7 @@
         @endforeach
         @endif
       </div>
+
     </div>
     @endforeach
   </div>
@@ -94,7 +95,8 @@
           <div class="selected_engineer">
             <label>選択科目 </label>
 
-             @foreach($subjects as $subject)
+<!-- ☆選択科目のチェックボックスを表示↓ -->
+    @foreach($subjects as $subject)
         <div>
             <input
                 type="checkbox"

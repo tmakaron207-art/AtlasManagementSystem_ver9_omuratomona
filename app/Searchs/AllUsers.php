@@ -6,6 +6,8 @@ use App\Models\Users\User;
 class AllUsers implements DisplayUsers{
 
   public function resultUsers($keyword, $category, $updown, $gender, $role, $subjects){
+
+// ☆すべてのユーザーを取得
     $users = User::query();
 
     // 科目が選択されている場合

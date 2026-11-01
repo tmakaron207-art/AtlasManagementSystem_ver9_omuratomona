@@ -1,4 +1,6 @@
 <?php
+// ☆☆名前でユーザーを検索する処理を書くクラス☆☆
+
 namespace App\Searchs;
 
 use App\Models\Users\User;
@@ -33,7 +35,7 @@ class SelectNames implements DisplayUsers{
             }
 
 // ☆追加↓（ $users = $usersだけ）
-         $users = $users
+        $users = $users
         ->orderBy('over_name_kana', $updown)
         ->get();
 
