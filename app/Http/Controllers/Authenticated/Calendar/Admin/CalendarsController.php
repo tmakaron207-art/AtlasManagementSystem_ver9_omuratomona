@@ -14,6 +14,7 @@ use DB;
 
 class CalendarsController extends Controller
 {
+// ☆予約枠の情報と実際の予約者数を結びつける
     public function show(){
         $calendar = new CalendarView(time());
         return view('authenticated.calendar.admin.calendar', compact('calendar'));

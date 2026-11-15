@@ -1,4 +1,6 @@
 <?php
+
+// ☆管理者側のカレンダーを作っているファイル
 namespace App\Calendars\Admin;
 use Carbon\Carbon;
 use App\Models\Users\User;
@@ -45,6 +47,7 @@ class CalendarView{
           $html[] = '<td class="border '.$day->getClassName().'">';
         }
         $html[] = $day->render();
+// ☆予約状況を表示するための処理
         $html[] = $day->dayPartCounts($day->everyDay());
         $html[] = '</td>';
       }

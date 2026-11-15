@@ -23,22 +23,43 @@ class CalendarWeekDay{
     return $this->carbon->format("Y-m-d");
   }
 
+// ☆1部・2部・3部の予約枠を取得
   function dayPartCounts($ymd){
     $html = [];
-    $one_part = ReserveSettings::with('users')->where('setting_reserve', $ymd)->where('setting_part', '1')->first();
-    $two_part = ReserveSettings::with('users')->where('setting_reserve', $ymd)->where('setting_part', '2')->first();
-    $three_part = ReserveSettings::with('users')->where('setting_reserve', $ymd)->where('setting_part', '3')->first();
+
+    $parts = [
+        '1' => '1部',
+        '2' => '2部',
+        '3' => '3部',
+    ];
 
     $html[] = '<div class="text-left">';
-    if($one_part){
-      $html[] = '<p class="day_part m-0 pt-1">1部</p>';
+
+    foreach($parts as $part => $partName){
+
+        $reserve = ReserveSettings::with('users')
+            ->where('setting_reserve', $ymd)
+            ->where('setting_part', $part)
+            ->first();
+
+        if($reserve){
+            // 予約している人数を取得
+            $reserveCount = $reserve->users->count();
+
+            // 予約詳細画面へのURLを作成
+            $url = route('calendar.admin.detail', [
+                'date' => $ymd,
+                'part' => $part,
+            ]);
+
+            $html[] = '<p class="day_part m-0 pt-1">';
+            $html[] = '<a href="' . $url . '">';
+            $html[] = $partName . '（' . $reserveCount . '人）';
+            $html[] = '</a>';
+            $html[] = '</p>';
+        }
     }
-    if($two_part){
-      $html[] = '<p class="day_part m-0 pt-1">2部</p>';
-    }
-    if($three_part){
-      $html[] = '<p class="day_part m-0 pt-1">3部</p>';
-    }
+
     $html[] = '</div>';
 
     return implode("", $html);
