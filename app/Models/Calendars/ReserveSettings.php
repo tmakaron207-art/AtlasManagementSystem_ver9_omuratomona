@@ -15,6 +15,7 @@ class ReserveSettings extends Model
         'limit_users',
     ];
 
+// ☆予約枠と予約したユーザーを結びつける部分
     public function users(){
         return $this->belongsToMany('App\Models\Users\User', 'reserve_setting_users', 'reserve_setting_id', 'user_id')->withPivot('reserve_setting_id', 'id');
     }

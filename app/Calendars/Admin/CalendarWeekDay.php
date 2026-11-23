@@ -37,6 +37,7 @@ class CalendarWeekDay{
 
     foreach($parts as $part => $partName){
 
+// ☆予約者一覧を取得
         $reserve = ReserveSettings::with('users')
             ->where('setting_reserve', $ymd)
             ->where('setting_part', $part)
