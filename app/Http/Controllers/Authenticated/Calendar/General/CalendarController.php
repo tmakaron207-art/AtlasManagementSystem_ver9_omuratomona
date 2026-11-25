@@ -1,4 +1,5 @@
 <?php
+// ☆生徒用カレンダーコントロ－ラ
 
 namespace App\Http\Controllers\Authenticated\Calendar\General;
 
