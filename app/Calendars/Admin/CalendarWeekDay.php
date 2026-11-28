@@ -1,15 +1,47 @@
 <?php
+// ☆日付ごとのクラス名や表示判定
+
 namespace App\Calendars\Admin;
 
 use Carbon\Carbon;
 use App\Models\Calendars\ReserveSettings;
 
+// ☆ログインしている自分のIDを取得するためuse宣言追加↓（参加した部の表示用）
+use Illuminate\Support\Facades\Auth;
+
+
 class CalendarWeekDay{
   protected $carbon;
 
+// ☆カレンダーの日付を $this->carbon に入れておく役割
   function __construct($date){
     $this->carbon = new Carbon($date);
   }
+
+// ☆日付を「左側の日付が、右側の日付以下か」を判定するメソッド↓
+function isPastOrToday(){
+    return $this->carbon->lessThanOrEqualTo(Carbon::today());
+}
+
+// ☆自分がその日に参加していた部を調べるメソッド↓
+function getletsPart(){
+    // ☆カレンダーで処理している日の予約データを絞り込む準備↓
+    $reserve = ReserveSettings::where('setting_reserve', $this->carbon->format('Y-m-d'))
+    // ☆usersとの紐づきがある予約に絞り、紐づいているユーザーのIDがログイン中の自分と一致するか調べる↓
+    ->whereHas('users', function($query) {
+            $query->where('users.id', Auth::id());
+            })
+    // ☆条件に一致する最初の1件のみ取得する↓
+    ->first();
+
+    // ☆どこの部に入っているのか取得するため、まず予約データがあるかないかを判断する設定↓
+    if($reserve){
+        // ☆取得した $reserve の中にある setting_part を取り出したのをreturnで返す設定↓
+        return $reserve->setting_part;
+}
+        return null;
+
+}
 
   function getClassName(){
     return "day-" . strtolower($this->carbon->format("D"));

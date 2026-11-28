@@ -14,7 +14,9 @@
           <th class="w-25">場所</th>
         </tr>
 
+<!-- ☆予約しているユーザーを1人ずつ取り出す処理設定↓ -->
     @foreach($reservePersons as $reserve)
+<!-- ☆ユーザー一人一人の情報を取得する設定↓ -->
         @foreach($reserve->users as $user)
         <tr class="text-center">
             <td class="w-25">{{ $user-> id }}</td>

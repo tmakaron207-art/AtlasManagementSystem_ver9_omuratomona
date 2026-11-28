@@ -49,16 +49,42 @@ class CalendarSettingView{
 // ☆$toDay	現在の日付
         $toDay = $this->carbon->format("Y-m-d");
 
+
 // ☆その日付が1日から現在の日付までの範囲に入っているか確認
-      if($startDay <= $day->everyDay() && $toDay >= $day->everyDay()){
+    //   if($startDay <= $day->everyDay() && $toDay >= $day->everyDay()){
+// ☆上記のif文から下記に変更。今日以前か判定できるように設定↓
+    if($day->isPastOrToday()){
+
 // ☆範囲内なら past-day というクラスを付ける
-          $html[] = '<td class="past-day border">';
+        $html[] = '<td class="past-day border">';
+
+// ☆まず自分が参加していた部を取得して、$part に保存↓
+        $part =  $day->getletsPart();
+        dd($part);
+
+// ☆参加しているかしてないかをifで判断する設定↓
+    if($part === null){
+
+        // ☆参加していなければ「受付終了」を表示↓
+        $html[] ='受付終了';
+
+    }else{
+
+         // ☆参加していれば参加していた部を表示↓
+            $html[] = $part . '部';
+        }
+// ☆過去の日側のtdを閉じる↓
+    $html[] = '</td>';
+
+
         }else{
 // ☆それ以外なら曜日などに応じたクラスを付ける
           $html[] = '<td class="border '.$day->getClassName().'">';
-        }
-// ☆日付そのものをHTMLとして表示する処理
+
+        // ☆日付そのものをHTMLとして表示する処理
         $html[] = $day->render();
+        $html[] = '</td>';
+        }
 
 // ☆adjust-area というdivを作り、その日付が存在する場合に予約人数の入力欄を作る
         $html[] = '<div class="adjust-area">';
