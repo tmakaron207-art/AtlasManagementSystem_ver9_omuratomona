@@ -60,7 +60,7 @@ class CalendarSettingView{
 
 // ☆まず自分が参加していた部を取得して、$part に保存↓
         $part =  $day->getletsPart();
-        dd($part);
+
 
 // ☆参加しているかしてないかをifで判断する設定↓
     if($part === null){
